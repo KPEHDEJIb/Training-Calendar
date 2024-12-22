@@ -29,4 +29,4 @@ COPY . /app
 EXPOSE 5000
 
 # Запускаем приложение
-CMD ["python", "front.py"]
+CMD ["python", "parser.py"]
