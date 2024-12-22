@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Календарь тренировок</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css">
+</head>
+<body>
+    <h1>Календарь тренировок</h1>
+    <div class="description">
+        <p>Чтобы изменить даты тренировок, нажмите на любую дату из недели календаря - она будет являться началом тренировок.</p>
+    </div>
+    <div class="calendar-group">
+        <div class="date-info">
+            <span>Старт: </span><span id="startDate">---</span>
+        </div>
+        <div class="date-info">
+            <span>Конец: </span><span id="endDate">---</span>
+        </div>
+        <div class="button-date-info">
+            <button class="button" id="buttonGotoStartWeek">К первой неделе</button>
+        </div>
+        <div class="button-date-info">
+            <button class="button" id="buttonGotoEndWeek">К последней неделе</button>
+        </div>
+        <div id="calendar"></div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

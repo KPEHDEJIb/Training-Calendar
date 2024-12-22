@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Информация на {{ date }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1 class="header">Информация на {{ date }}</h1>
+        <ul class="exercise-info">
+            {% for info in exercise_info %}
+                <li class="info-item">{{ info }}</li>
+            {% endfor %}
+        </ul>
+        <a class="back-link" href="/">Назад к календарю</a>
+    </div>
+</body>
+</html>
