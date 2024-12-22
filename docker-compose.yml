@@ -9,3 +9,7 @@ services:
       - .:/app
     environment:
       - DISPLAY=:99
+      - FLASK_APP=app.py
+      - FLASK-ENV=development
+    stdin_open: true
+    tty: true

@@ -3,8 +3,7 @@ from os import path
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 
@@ -18,12 +17,14 @@ def get_sources_html():
         "password": "NHBjeGRm"
     }
 
-    options = Options()
-    options.add_argument("--headless")
-    options.add_argument("--window-size=1920,1080")
+    options = webdriver.FirefoxOptions()
+    options.add_argument('--headless')
+    options.add_argument('--disable-gpu')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
 
-    service = Service(executable_path="../parser/chromedriver/chromedriver.exe")
-    driver = webdriver.Chrome(options=options, service=service)
+    service = Service(executable_path="/usr/local/bin/geckodriver")
+    driver = webdriver.Firefox(options=options, service=service)
 
     try:
         print("[+] Logging in...")
