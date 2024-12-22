@@ -1,29 +1,32 @@
-FROM python:3.12
+FROM python:3
 
-RUN apt-get update && apt-get install -y \
-    wget \
-    unzip \
-    chromium-driver \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \
+RUN apt-get update
+RUN apt-get install -y firefox-esr wget
+RUN apt-get clean
 
-RUN apt-get update && \
-    apt-get install -y gnupg wget curl unzip --no-install-recommends && \
-    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
-    echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list && \
-    apt-get update -y && \
-    apt-get install -y google-chrome-stable && \
-    CHROMEVER=$(google-chrome --product-version | grep -o "[^\.]*\.[^\.]*\.[^\.]*") && \
-    DRIVERVER=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROMEVER") && \
-    wget -q --continue -P /chromedriver "http://chromedriver.storage.googleapis.com/$DRIVERVER/chromedriver_linux64.zip" && \
-    unzip /chromedriver/chromedriver* -d /chromedriver
+RUN ARCH=$(uname -m) && \
+    if [ "$ARCH" = "x86_64" ]; then \
+        wget https://github.com/mozilla/geckodriver/releases/download/v0.35.0/geckodriver-v0.35.0-linux64.tar.gz -O /tmp/geckodriver.tar.gz; \
+    elif [ "$ARCH" = "aarch64" ]; then \
+        wget https://github.com/mozilla/geckodriver/releases/download/v0.35.0/geckodriver-v0.35.0-linux-aarch64.tar.gz -O /tmp/geckodriver.tar.gz; \
+    else \
+        echo "Unsupported architecture: $ARCH" && exit 1; \
+    fi && \
+    tar -xvzf /tmp/geckodriver.tar.gz -C /usr/local/bin && \
+    chmod +x /usr/local/bin/geckodriver
 
+RUN geckodriver --version
+
+# Устанавливаем рабочую директорию
 WORKDIR /app
+COPY requirements.txt /app
+RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
+# Копируем файлы приложения в контейнер
 COPY . /app
 
-RUN pip install --no-cache-dir -r requirements.txt
-
+# Открываем порт, на котором будет работать Flask
 EXPOSE 5000
 
-CMD ["sh", "-c", "python parser/parser.py && python parser/data_handler.py && python website/app.py"]
+# Запускаем приложение
+CMD ["python", "front.py"]
