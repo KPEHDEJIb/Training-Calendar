@@ -1,5 +1,5 @@
 import time
-from os import path
+from os import path, mkdir
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
@@ -23,6 +23,9 @@ def get_sources_html():
     service = Service(executable_path="/usr/local/bin/geckodriver")
     # service = Service(executable_path=path.abspath("gekodriver/geckodriver.exe"))
     driver = webdriver.Firefox(options=options, service=service)
+
+    if not path.exists("scraped_websites"):
+        mkdir("scraped_websites")
 
     try:
         print("[+] Logging in...")
