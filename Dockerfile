@@ -25,7 +25,4 @@ COPY . /app
 
 EXPOSE 5000
 
-CMD ["python", "parser/parser.py"]
-CMD ["python", "parser/data_handler.py"]
-
-CMD ["python", "website/app.py", "--host=0.0.0.0", "--port=5000"]
+CMD ["sh", "-c", "python parser/parser.py && python parser/data_handler.py && python website/app.py --host=0.0.0.0 --port=5000"]
