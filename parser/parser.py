@@ -3,7 +3,7 @@ from os import path, mkdir
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
-from selenium.webdriver.firefox.service import Service
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 
@@ -17,12 +17,12 @@ def get_sources_html():
         "password": "NHBjeGRm"
     }
 
-    options = webdriver.FirefoxOptions()
+    options = webdriver.ChromeOptions()
     options.add_argument('--headless')
 
-    service = Service(executable_path="/usr/local/bin/geckodriver")
-    # service = Service(executable_path=path.abspath("gekodriver/geckodriver.exe"))
-    driver = webdriver.Firefox(options=options, service=service)
+    # service = Service(executable_path="/usr/local/bin/geckodriver")
+    service = Service(executable_path=path.abspath("chromedriver/chromedriver.exe"))
+    driver = webdriver.Chrome(options=options, service=service)
 
     if not path.exists("scraped_websites"):
         mkdir("scraped_websites")
