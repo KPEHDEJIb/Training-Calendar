@@ -1,4 +1,5 @@
 import json
+from os import path
 from datetime import datetime, timedelta
 from flask import Flask, render_template, jsonify, request
 
@@ -14,7 +15,7 @@ def get_nearest_monday():
 
 @app.route("/get_exercises/<string:start_monday>")
 def get_exercises(start_monday: str):
-    with open("../_trashcan/exercises.json", 'r', encoding="utf-8") as f:
+    with open(path.abspath("website/data/exercises.json"), 'r', encoding="utf-8") as f:
         data = json.load(f)
 
     start_monday = datetime(*list(map(int, start_monday.split('-'))))
@@ -46,7 +47,7 @@ def dayinfo():
     week = int(request.args.get("week"))
     day = int(request.args.get("day"))
 
-    with open("../_trashcan/exercises.json", 'r', encoding="utf-8") as f:
+    with open(path.abspath("website/data/exercises.json"), 'r', encoding="utf-8") as f:
         data = json.load(f)
 
     nearest_monday = get_nearest_monday()
@@ -68,4 +69,4 @@ def dayinfo():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0")

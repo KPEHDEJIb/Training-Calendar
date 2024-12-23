@@ -5,12 +5,9 @@ from bs4 import BeautifulSoup
 
 
 def save_data(data: dict):
-    if not path.exists(path.abspath("../website")):
-        mkdir(path.abspath("../website"))
-    if not path.exists(path.abspath("../website/data")):
-        mkdir(path.abspath("../website/data"))
-
-    with open(path.abspath("../website/data/exercises.json"), 'w', encoding="utf-8") as file:
+    if not path.exists(path.abspath("website/data")):
+        mkdir(path.abspath("website/data"))
+    with open(path.abspath("website/data/exercises.json"), 'w', encoding="utf-8") as file:
         json.dump(data, file, indent=2, ensure_ascii=False)
 
 
