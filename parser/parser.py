@@ -19,11 +19,9 @@ def get_sources_html():
 
     options = webdriver.FirefoxOptions()
     options.add_argument('--headless')
-    options.add_argument('--disable-gpu')
-    options.add_argument('--no-sandbox')
-    options.add_argument('--disable-dev-shm-usage')
 
     service = Service(executable_path="/usr/local/bin/geckodriver")
+    # service = Service(executable_path=path.abspath("gekodriver/geckodriver.exe"))
     driver = webdriver.Firefox(options=options, service=service)
 
     try:

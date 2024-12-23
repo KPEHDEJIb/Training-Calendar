@@ -17,16 +17,15 @@ RUN ARCH=$(uname -m) && \
 
 RUN geckodriver --version
 
-# Устанавливаем рабочую директорию
 WORKDIR /app
 COPY requirements.txt /app
 RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
-# Копируем файлы приложения в контейнер
 COPY . /app
 
-# Открываем порт, на котором будет работать Flask
 EXPOSE 5000
 
-# Запускаем приложение
-CMD ["python", "parser.py"]
+CMD ["python", "parser/parser.py"]
+CMD ["python", "parser/data_handler.py"]
+
+CMD ["python", "website/app.py", "--host=0.0.0.0", "--port=5000"]
